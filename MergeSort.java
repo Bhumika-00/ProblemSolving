@@ -25,7 +25,7 @@ public class MergeSort {
      int i = start;
      int j = mid+1;
      int k = 0;
-     int temp[] = new int[end - start + 1];  // ✅ Correct size
+     int temp[] = new int[end - start + 1]; 
 
      while(i<= mid && j<=end)
      {
