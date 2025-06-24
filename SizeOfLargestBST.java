@@ -37,14 +37,14 @@ public class SizeOfLargestBST {
         int min = Math.min(root.data , Math.min(leftInfo.min , rightInfo.min));
         int max = Math.max(root.data, Math.max(leftInfo.max, rightInfo.max));
 
-        if(root.data<=leftInfo.max && root.data>=rightInfo.min)
+        if(root.data<=leftInfo.max || root.data>=rightInfo.min)
         {
-            return false;
+            return new Info(false, size, min, max);
         }
         if(leftInfo.isBST && rightInfo.isBST)
         {
             maxBst = Math.max(maxBst,size);
-            new Info(true, size, min, max);
+           return new Info(true, size, min, max);
         }
         return new Info(false, size, min, max);
     }
