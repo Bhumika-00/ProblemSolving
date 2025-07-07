@@ -34,17 +34,15 @@ public class KhanAlgo {
 
         System.out.print("Topological Order: ");
         while (!q1.isEmpty()) {
-           int curr = q1.remove();
-           System.out.print(curr);
-           for(int i=0;i<graph[curr].size();i++)
-           {
-            Edge e = graph[curr].get(i);
-            indeg[e.destination]--;
-            if(indeg[e.destination]==0)
-            {
-                q1.add(e.destination);
+            int curr = q1.remove();
+            System.out.print(curr);
+            for (int i = 0; i < graph[curr].size(); i++) {
+                Edge e = graph[curr].get(i);
+                indeg[e.destination]--;
+                if (indeg[e.destination] == 0) {
+                    q1.add(e.destination);
+                }
             }
-           }
         }
         System.out.println();
     }
