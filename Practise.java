@@ -107,7 +107,7 @@ public class Practise {
     }
     return false;
     }
-
+    public static 
     public static void main(String[] args) {
         int V = 6;
         @SuppressWarnings("unchecked")
