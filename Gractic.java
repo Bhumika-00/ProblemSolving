@@ -155,7 +155,7 @@ public class Gractic {
 
     public static void khanAlgo(ArrayList<Edge> graph[]) {
         int inDegree[] = new int[graph.length];
-        IndegreeCal(graph, inDegree);    // 🔥 correct one for your use case
+        IndegreeCal(graph, inDegree);    
 
         Queue<Integer> q1 = new LinkedList<>();
         for (int i = 0; i < inDegree.length; i++) {
