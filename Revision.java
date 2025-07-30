@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -245,9 +246,49 @@ public class Revision {
             this.node=node;
             this.path=path;
         }
-        public static int compareTo(Pair p2)
+        public int compareTo(Pair p2)
         {
         return this.path-p2.path;
+        }
+    }
+
+    public static void dikshtraAlgo(ArrayList<Edge> graph[] , int source)
+    {
+        int dist[]=new int[graph.length];
+        boolean isVistedlalgo[]=new boolean[graph.length];
+
+        for(int i=0;i<dist.length;i++)
+        {
+            if(source!=i)
+            {
+                dist[i]=Integer.MAX_VALUE;
+            }
+        }
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.add(new Pair(source, 0));
+        while (!pq.isEmpty()) {
+            Pair curr = pq.remove();
+            if(!isVistedlalgo[curr.node])
+            {
+                isVistedlalgo[curr.node]=true;
+                for(int i=0;i<graph[curr.node].size();i++)
+                {
+                    Edge e = graph[curr.node].get(i);
+                    int u = e.src;
+                    int v = e.dest;
+                    int weight = e.weight;
+
+                    if(dist[u]+weight<dist[v])
+                    {
+                        dist[v]=dist[u]+weight;
+                        pq.add(new Pair(v, dist[v]));
+                    }
+                }
+            }
+        }
+        for(int i=0;i<dist.length;i++)
+        {
+            System.out.println(dist[i]);
         }
     }
     public static void main(String[] args) {
@@ -288,5 +329,8 @@ public class Revision {
         System.out.println();
         System.out.println("--------------------------------------");
         allPath(graph, 0, 3, "");
+        System.out.println();
+        System.out.println("--------------------------------------");
+        dikshtraAlgo(graph, 0);
     }
 }
