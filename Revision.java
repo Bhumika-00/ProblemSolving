@@ -15,7 +15,7 @@ public class Revision {
             this.weight = weight;
         }
     }
-
+    
     public static void bfs(ArrayList<Edge> graph[]) {
         boolean isVistedDFS[] = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
@@ -234,6 +234,21 @@ public class Revision {
         Edge e = graph[src].get(i);
         allPath(graph, e.dest, dest, path+src);
      }
+    }
+
+    public static class Pair implements Comparable<Pair>{
+        int node;
+        int path;
+
+        Pair(int node , int path)
+        {
+            this.node=node;
+            this.path=path;
+        }
+        public static int compareTo(Pair p2)
+        {
+        return this.path-p2.path;
+        }
     }
     public static void main(String[] args) {
         int V = 6;
