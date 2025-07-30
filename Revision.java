@@ -16,7 +16,7 @@ public class Revision {
             this.weight = weight;
         }
     }
-    
+
     public static void bfs(ArrayList<Edge> graph[]) {
         boolean isVistedDFS[] = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
@@ -223,73 +223,127 @@ public class Revision {
             }
         }
     }
-    public static void allPath(ArrayList<Edge> graph[] , int src , int dest , String path)
-    {
-     if(src==dest)
-     {
-        System.out.println(path+dest);
-        return;
-     }
-     for(int i=0;i<graph[src].size();i++)
-     {
-        Edge e = graph[src].get(i);
-        allPath(graph, e.dest, dest, path+src);
-     }
+
+    public static void allPath(ArrayList<Edge> graph[], int src, int dest, String path) {
+        if (src == dest) {
+            System.out.println(path + dest);
+            return;
+        }
+        for (int i = 0; i < graph[src].size(); i++) {
+            Edge e = graph[src].get(i);
+            allPath(graph, e.dest, dest, path + src);
+        }
     }
 
-    public static class Pair implements Comparable<Pair>{
+    public static class Pair implements Comparable<Pair> {
         int node;
         int path;
 
-        Pair(int node , int path)
-        {
-            this.node=node;
-            this.path=path;
+        Pair(int node, int path) {
+            this.node = node;
+            this.path = path;
         }
-        public int compareTo(Pair p2)
-        {
-        return this.path-p2.path;
+
+        public int compareTo(Pair p2) {
+            return this.path - p2.path;
         }
     }
 
-    public static void dikshtraAlgo(ArrayList<Edge> graph[] , int source)
-    {
-        int dist[]=new int[graph.length];
-        boolean isVistedlalgo[]=new boolean[graph.length];
+    public static void dikshtraAlgo(ArrayList<Edge> graph[], int source) {
+        int dist[] = new int[graph.length];
+        boolean isVistedlalgo[] = new boolean[graph.length];
 
-        for(int i=0;i<dist.length;i++)
-        {
-            if(source!=i)
-            {
-                dist[i]=Integer.MAX_VALUE;
+        for (int i = 0; i < dist.length; i++) {
+            if (source != i) {
+                dist[i] = Integer.MAX_VALUE;
             }
         }
         PriorityQueue<Pair> pq = new PriorityQueue<>();
         pq.add(new Pair(source, 0));
         while (!pq.isEmpty()) {
             Pair curr = pq.remove();
-            if(!isVistedlalgo[curr.node])
-            {
-                isVistedlalgo[curr.node]=true;
-                for(int i=0;i<graph[curr.node].size();i++)
-                {
+            if (!isVistedlalgo[curr.node]) {
+                isVistedlalgo[curr.node] = true;
+                for (int i = 0; i < graph[curr.node].size(); i++) {
                     Edge e = graph[curr.node].get(i);
                     int u = e.src;
                     int v = e.dest;
                     int weight = e.weight;
 
-                    if(dist[u]+weight<dist[v])
-                    {
-                        dist[v]=dist[u]+weight;
+                    if (dist[u] + weight < dist[v]) {
+                        dist[v] = dist[u] + weight;
                         pq.add(new Pair(v, dist[v]));
                     }
                 }
             }
         }
-        for(int i=0;i<dist.length;i++)
-        {
+        for (int i = 0; i < dist.length; i++) {
             System.out.println(dist[i]);
         }
+    }
+
+    public static void BellmanFord(ArrayList<Edge> graph[], int src) {
+        int distance[] = new int[graph.length];
+        for (int i = 0; i < distance.length; i++) {
+            if (src != i) {
+                distance[i] = Integer.MAX_VALUE;
+            }
+        }
+        int V = graph.length;
+        for (int i = 0; i < V - 1; i++) {
+            for (int j = 0; j < graph.length; j++) {
+                for (int k = 0; k < graph[j].size(); k++) {
+                    Edge e = graph[j].get(k);
+
+                    int u = e.src;
+                    int v = e.dest;
+                    int weight = e.weight;
+                    if (distance[u] != Integer.MAX_VALUE && distance[u] + weight < distance[v]) {
+                        distance[v] = weight + distance[u];
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < distance.length; i++) {
+            System.out.println(distance[i]);
+        }
+    }
+    public static class Pairing implements Comparable<Pairing>{
+        int V;
+        int cost;
+
+        Pairing(int V , int cost)
+        {
+            this.V=V;
+            this.cost=cost;
+        }
+
+        public int compareTo(Pairing p2)
+        {
+            return this.cost-p2.cost;
+        }
+    }
+    public static void prim(ArrayList<Edge> graph[])
+    {
+        boolean isVistedPrim[]=new boolean[graph.length];
+        PriorityQueue<Pairing> pq = new PriorityQueue<>();
+        int finalCost=0;
+        pq.add(new Pairing(0, 0));
+        while (!pq.isEmpty()) {
+            Pairing curr = pq.remove();
+            if(!isVistedPrim[curr.V])
+            {
+                isVistedPrim[curr.V]=true;
+                finalCost=finalCost+curr.cost;
+                for(int i=0;i<graph[curr.V].size();i++)
+                {
+                    Edge e = graph[curr.V].get(i);
+                    pq.add(new Pairing(e.dest, e.weight));
+
+                }
+            }
+        }
+    System.out.println(finalCost);
     }
     public static void main(String[] args) {
         int V = 6;
@@ -332,5 +386,11 @@ public class Revision {
         System.out.println();
         System.out.println("--------------------------------------");
         dikshtraAlgo(graph, 0);
+        System.out.println();
+        System.out.println("--------------------------------------");
+        BellmanFord(graph, 0);
+        System.out.println();
+        System.out.println("--------------------------------------");
+        prim(graph);
     }
 }
