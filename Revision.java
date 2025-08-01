@@ -191,33 +191,40 @@ public class Revision {
         }
         s1.push(curr);
     }
-
-    public static void calindeg(ArrayList<Edge> graph[], int indeg[]) {
-        for (int i = 0; i < graph.length; i++) {
+    public static void calindeg(ArrayList<Edge> graph[],int indeg[])
+    {
+        for(int i=0;i<graph.length;i++)
+        {
             int V = i;
-            for (int j = 0; j < graph[V].size(); j++) {
+            for(int j=0;j<graph[V].size();j++)
+            {
                 Edge e = graph[V].get(j);
                 indeg[e.dest]++;
             }
         }
     }
-
-    public static void khanAlgo(ArrayList<Edge> graph[]) {
-        int indeg[] = new int[graph.length];
+    public static void khanAlgo(ArrayList<Edge> graph[])
+    {
+        boolean isVistedkhan[]=new boolean[graph.length];
+        int indeg[]=new int[graph.length];
         calindeg(graph, indeg);
         Queue<Integer> q1 = new LinkedList<>();
-        for (int i = 0; i < graph.length; i++) {
-            if (indeg[i] == 0) {
+        for(int i=0;i<indeg.length;i++)
+        {
+            if(indeg[i]==0)
+            {
                 q1.add(i);
             }
         }
         while (!q1.isEmpty()) {
             int curr = q1.remove();
             System.out.println(curr);
-            for (int i = 0; i < graph[curr].size(); i++) {
+            for(int i=0;i<graph[curr].size();i++)
+            {
                 Edge e = graph[curr].get(i);
                 indeg[e.dest]--;
-                if (indeg[e.dest] == 0) {
+                if(indeg[e.dest]==0)
+                {
                     q1.add(e.dest);
                 }
             }
